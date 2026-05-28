@@ -1,188 +1,240 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="light">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Samuel — Product Trainer Tracker</title>
-<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,600;1,9..144,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,300;0,400;0,500;0,600;1,300&family=Syne:wght@600;700&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   :root {
-    --bg: #F5F2EC;
-    --surface: #FDFBF7;
-    --surface2: #EDE9E0;
-    --ink: #1A1814;
-    --ink2: #6B6760;
-    --ink3: #A8A49F;
-    --accent: #C5440A;
-    --accent-light: #FAE8E0;
-    --green: #2D6A4F;
-    --green-light: #D8EDDF;
-    --amber: #B5600A;
+    --bg: #F4F2EE;
+    --surface: #FFFFFF;
+    --surface2: #ECEAE5;
+    --ink: #18161280;
+    --ink-solid: #181612;
+    --ink2: #6B6860;
+    --ink3: #A9A6A0;
+    --accent: #C5430A;
+    --accent-light: #FAEAE0;
+    --green: #1E6645;
+    --green-light: #D4EDE0;
+    --amber: #A85C0A;
     --amber-light: #FDF0DC;
-    --blue: #1A4F7A;
-    --blue-light: #DCE9F5;
-    --border: rgba(26,24,20,0.1);
-    --border-strong: rgba(26,24,20,0.2);
-    --radius: 10px;
-    --radius-sm: 6px;
-    --font-display: 'Fraunces', serif;
-    --font-mono: 'DM Mono', monospace;
+    --blue: #164E80;
+    --blue-light: #DAE8F5;
+    --purple: #5A3080;
+    --purple-light: #EDE5F5;
+    --border: rgba(24,22,18,0.09);
+    --border-strong: rgba(24,22,18,0.18);
+    --radius: 12px;
+    --radius-sm: 7px;
+    --font: 'Plus Jakarta Sans', sans-serif;
+    --font-display: 'Syne', sans-serif;
+    --shadow: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+    --transition: 0.2s ease;
   }
+
+  [data-theme="dark"] {
+    --bg: #111110;
+    --surface: #1C1B19;
+    --surface2: #252320;
+    --ink: #E8E4DC;
+    --ink-solid: #E8E4DC;
+    --ink2: #9E9A92;
+    --ink3: #5C5A55;
+    --accent: #E05A20;
+    --accent-light: #2A1A10;
+    --green: #34A86A;
+    --green-light: #0E2A1C;
+    --amber: #D4820A;
+    --amber-light: #261A06;
+    --blue: #4A90D4;
+    --blue-light: #0E1E30;
+    --purple: #9A70D4;
+    --purple-light: #1E1030;
+    --border: rgba(255,255,255,0.08);
+    --border-strong: rgba(255,255,255,0.14);
+    --shadow: 0 1px 3px rgba(0,0,0,0.3);
+  }
+
+  html { transition: background var(--transition), color var(--transition); }
 
   body {
     background: var(--bg);
-    color: var(--ink);
-    font-family: var(--font-mono);
-    font-size: 13px;
+    color: var(--ink-solid);
+    font-family: var(--font);
+    font-size: 13.5px;
     line-height: 1.6;
     min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
   }
 
-  /* Layout */
-  .shell { max-width: 860px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
+  .shell { max-width: 880px; margin: 0 auto; padding: 2rem 1.25rem 4rem; }
 
-  /* Header */
-  .header { margin-bottom: 2.5rem; border-bottom: 1px solid var(--border-strong); padding-bottom: 1.5rem; }
+  /* ── Header ── */
+  .header { margin-bottom: 2rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border-strong); }
   .header-top { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
-  .header h1 { font-family: var(--font-display); font-size: 2rem; font-weight: 300; font-style: italic; color: var(--ink); line-height: 1.1; }
+  .header h1 { font-family: var(--font-display); font-size: 1.9rem; font-weight: 700; color: var(--ink-solid); line-height: 1.1; letter-spacing: -0.02em; }
   .header h1 span { color: var(--accent); }
+  .header-sub { font-size: 11.5px; color: var(--ink3); margin-top: 5px; letter-spacing: 0.02em; }
+  .header-right { display: flex; align-items: flex-start; gap: 10px; }
   .header-meta { font-size: 11px; color: var(--ink3); text-align: right; }
-  .header-meta strong { color: var(--ink2); display: block; font-weight: 500; }
+  .header-meta strong { color: var(--ink2); display: block; font-weight: 500; font-size: 12px; }
 
-  /* Countdown strip */
-  .countdown-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 2rem; }
-  .count-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.875rem 1rem; }
-  .count-card .num { font-family: var(--font-display); font-size: 1.8rem; font-weight: 600; color: var(--ink); line-height: 1; }
+  /* ── Dark mode toggle ── */
+  .theme-toggle {
+    width: 36px; height: 36px; border-radius: 50%;
+    border: 1px solid var(--border-strong);
+    background: var(--surface);
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; flex-shrink: 0;
+    transition: background var(--transition), border-color var(--transition), transform 0.15s;
+    box-shadow: var(--shadow);
+  }
+  .theme-toggle:hover { transform: scale(1.08); border-color: var(--accent); }
+
+  /* ── Countdown strip ── */
+  .countdown-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 1.75rem; }
+  .count-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1rem 0.875rem; box-shadow: var(--shadow); }
+  .count-card .num { font-family: var(--font-display); font-size: 1.75rem; font-weight: 700; color: var(--ink-solid); line-height: 1; letter-spacing: -0.02em; }
   .count-card .num.accent { color: var(--accent); }
-  .count-card .lbl { font-size: 10px; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+  .count-card .lbl { font-size: 10.5px; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.07em; margin-top: 5px; font-weight: 500; }
 
-  /* Tabs */
-  .tabs { display: flex; gap: 4px; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); padding-bottom: 0; }
-  .tab { padding: 0.5rem 1rem; font-family: var(--font-mono); font-size: 12px; color: var(--ink3); cursor: pointer; border: none; background: none; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color 0.15s; letter-spacing: 0.03em; }
+  /* ── Tabs ── */
+  .tabs { display: flex; gap: 2px; margin-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+  .tab { padding: 0.5rem 1rem 0.6rem; font-family: var(--font); font-size: 12.5px; font-weight: 500; color: var(--ink3); cursor: pointer; border: none; background: none; border-bottom: 2px solid transparent; margin-bottom: -1px; transition: color var(--transition); letter-spacing: 0.01em; }
   .tab:hover { color: var(--ink2); }
   .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
 
-  /* Panels */
+  /* ── Panels ── */
   .panel { display: none; }
   .panel.active { display: block; }
 
-  /* Phase blocks */
-  .phase-block { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 1rem; overflow: hidden; }
-  .phase-head { display: flex; align-items: center; justify-content: space-between; padding: 0.875rem 1rem; cursor: pointer; gap: 1rem; }
+  /* ── Phase blocks ── */
+  .phase-block { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); margin-bottom: 10px; overflow: hidden; box-shadow: var(--shadow); transition: box-shadow var(--transition); }
+  .phase-block:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+  [data-theme="dark"] .phase-block:hover { box-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+  .phase-head { display: flex; align-items: center; justify-content: space-between; padding: 0.9rem 1.1rem; cursor: pointer; gap: 1rem; }
   .phase-head-left { display: flex; align-items: center; gap: 10px; }
-  .phase-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
-  .phase-title { font-size: 12px; font-weight: 500; color: var(--ink); letter-spacing: 0.02em; }
-  .phase-sub { font-size: 11px; color: var(--ink3); }
+  .phase-dot { width: 9px; height: 9px; border-radius: 50%; flex-shrink: 0; }
+  .phase-title { font-size: 13px; font-weight: 600; color: var(--ink-solid); }
+  .phase-sub { font-size: 11px; color: var(--ink3); margin-top: 1px; }
   .phase-right { display: flex; align-items: center; gap: 10px; }
-  .phase-pct { font-size: 11px; color: var(--ink3); min-width: 30px; text-align: right; }
-  .mini-bar { width: 60px; height: 3px; background: var(--surface2); border-radius: 2px; overflow: hidden; }
-  .mini-fill { height: 100%; border-radius: 2px; transition: width 0.3s; }
-  .chevron { font-size: 10px; color: var(--ink3); transition: transform 0.2s; }
+  .phase-pct { font-size: 11px; color: var(--ink3); min-width: 28px; text-align: right; font-weight: 500; }
+  .mini-bar { width: 56px; height: 3px; background: var(--surface2); border-radius: 2px; overflow: hidden; }
+  .mini-fill { height: 100%; border-radius: 2px; transition: width 0.4s ease; }
+  .chevron { font-size: 9px; color: var(--ink3); transition: transform 0.2s; }
   .phase-block.collapsed .chevron { transform: rotate(-90deg); }
-
   .phase-body { border-top: 1px solid var(--border); }
   .phase-block.collapsed .phase-body { display: none; }
 
-  /* Tasks */
-  .task-item { display: flex; align-items: flex-start; gap: 10px; padding: 0.75rem 1rem; border-bottom: 1px solid var(--border); transition: background 0.1s; }
+  /* ── Tasks ── */
+  .task-item { display: flex; align-items: flex-start; gap: 10px; padding: 0.7rem 1.1rem; border-bottom: 1px solid var(--border); transition: background 0.1s; }
   .task-item:last-child { border-bottom: none; }
   .task-item:hover { background: var(--surface2); }
-  .task-cb { width: 16px; height: 16px; border: 1px solid var(--border-strong); border-radius: 3px; flex-shrink: 0; margin-top: 1px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+  .task-cb { width: 17px; height: 17px; border: 1.5px solid var(--border-strong); border-radius: 4px; flex-shrink: 0; margin-top: 2px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
   .task-cb.done { background: var(--green); border-color: var(--green); }
-  .task-cb.done::after { content: '✓'; color: white; font-size: 10px; line-height: 1; }
+  .task-cb.done::after { content: '✓'; color: white; font-size: 10px; line-height: 1; font-weight: 600; }
   .task-content { flex: 1; }
-  .task-text { font-size: 13px; color: var(--ink); transition: color 0.15s; }
+  .task-text { font-size: 13.5px; color: var(--ink-solid); transition: color 0.15s; font-weight: 400; }
   .task-text.done { text-decoration: line-through; color: var(--ink3); }
-  .task-meta { display: flex; align-items: center; gap: 6px; margin-top: 4px; flex-wrap: wrap; }
-  .tag { font-size: 10px; padding: 1px 7px; border-radius: 20px; letter-spacing: 0.04em; }
-  .task-actions { display: flex; gap: 4px; opacity: 0; transition: opacity 0.15s; }
+  .task-meta { display: flex; align-items: center; gap: 5px; margin-top: 4px; flex-wrap: wrap; }
+  .tag { font-size: 10px; padding: 2px 8px; border-radius: 20px; letter-spacing: 0.03em; font-weight: 500; }
+  .task-actions { display: flex; gap: 3px; opacity: 0; transition: opacity 0.15s; }
   .task-item:hover .task-actions { opacity: 1; }
-  .task-btn { background: none; border: none; cursor: pointer; font-size: 13px; padding: 2px 4px; color: var(--ink3); border-radius: 3px; }
+  .task-btn { background: none; border: none; cursor: pointer; font-size: 12px; padding: 3px 5px; color: var(--ink3); border-radius: 4px; line-height: 1; }
   .task-btn:hover { color: var(--accent); background: var(--accent-light); }
 
-  /* Add task */
-  .add-task-row { display: flex; gap: 8px; padding: 0.75rem 1rem; border-top: 1px dashed var(--border-strong); background: var(--bg); }
-  .add-task-row input, .add-task-row select { font-family: var(--font-mono); font-size: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 6px 10px; color: var(--ink); outline: none; }
-  .add-task-row input { flex: 1; }
+  /* ── Add task row ── */
+  .add-task-row { display: flex; gap: 8px; padding: 0.7rem 1rem; border-top: 1px dashed var(--border-strong); background: var(--bg); flex-wrap: wrap; }
+  .add-task-row input, .add-task-row select { font-family: var(--font); font-size: 12.5px; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 6px 10px; color: var(--ink-solid); outline: none; transition: border-color 0.15s; }
+  .add-task-row input { flex: 1; min-width: 140px; }
   .add-task-row input:focus, .add-task-row select:focus { border-color: var(--accent); }
-  .add-task-row button { background: var(--accent); color: white; border: none; border-radius: var(--radius-sm); padding: 6px 14px; font-family: var(--font-mono); font-size: 12px; cursor: pointer; transition: opacity 0.15s; }
+  .add-task-row button { background: var(--accent); color: white; border: none; border-radius: var(--radius-sm); padding: 6px 14px; font-family: var(--font); font-size: 12.5px; font-weight: 500; cursor: pointer; transition: opacity 0.15s; }
   .add-task-row button:hover { opacity: 0.85; }
 
-  /* Stats row */
+  /* ── Stats row ── */
   .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 1.5rem; }
-  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; }
-  .stat-card .n { font-family: var(--font-display); font-size: 2rem; font-weight: 600; line-height: 1; }
-  .stat-card .l { font-size: 10px; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 4px; }
+  .stat-card { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.1rem; box-shadow: var(--shadow); }
+  .stat-card .n { font-family: var(--font-display); font-size: 2rem; font-weight: 700; line-height: 1; letter-spacing: -0.02em; }
+  .stat-card .l { font-size: 10.5px; color: var(--ink3); text-transform: uppercase; letter-spacing: 0.07em; margin-top: 5px; font-weight: 500; }
 
-  /* Daily log */
-  .log-entry { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem; margin-bottom: 0.75rem; position: relative; }
-  .log-date { font-size: 10px; color: var(--ink3); letter-spacing: 0.06em; text-transform: uppercase; margin-bottom: 6px; }
-  .log-text { font-size: 13px; color: var(--ink); line-height: 1.6; white-space: pre-wrap; }
-  .log-del { position: absolute; top: 10px; right: 10px; background: none; border: none; color: var(--ink3); cursor: pointer; font-size: 14px; opacity: 0; transition: opacity 0.15s; }
+  /* ── Log ── */
+  .log-entry { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.1rem; margin-bottom: 8px; position: relative; box-shadow: var(--shadow); }
+  .log-date { font-size: 10.5px; color: var(--ink3); letter-spacing: 0.05em; text-transform: uppercase; margin-bottom: 6px; font-weight: 500; }
+  .log-text { font-size: 13.5px; color: var(--ink-solid); line-height: 1.65; white-space: pre-wrap; }
+  .log-del { position: absolute; top: 10px; right: 10px; background: none; border: none; color: var(--ink3); cursor: pointer; font-size: 13px; opacity: 0; transition: opacity 0.15s; line-height: 1; padding: 3px; }
   .log-entry:hover .log-del { opacity: 1; }
   .log-del:hover { color: var(--accent); }
-
   .log-add { display: flex; flex-direction: column; gap: 8px; margin-bottom: 1rem; }
-  .log-add textarea { font-family: var(--font-mono); font-size: 13px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 0.75rem 1rem; color: var(--ink); resize: vertical; min-height: 80px; outline: none; }
+  .log-add textarea { font-family: var(--font); font-size: 13.5px; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius); padding: 0.8rem 1rem; color: var(--ink-solid); resize: vertical; min-height: 84px; outline: none; transition: border-color 0.15s; box-shadow: var(--shadow); }
   .log-add textarea:focus { border-color: var(--accent); }
-  .log-add-row { display: flex; gap: 8px; align-items: center; }
-  .log-add-row select { font-family: var(--font-mono); font-size: 12px; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 6px 10px; color: var(--ink); outline: none; }
-  .log-add-row button { background: var(--accent); color: white; border: none; border-radius: var(--radius-sm); padding: 7px 16px; font-family: var(--font-mono); font-size: 12px; cursor: pointer; }
+  .log-add-row { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .log-add-row select { font-family: var(--font); font-size: 12.5px; background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 6px 10px; color: var(--ink-solid); outline: none; }
+  .log-add-row button { background: var(--accent); color: white; border: none; border-radius: var(--radius-sm); padding: 7px 18px; font-family: var(--font); font-size: 12.5px; font-weight: 500; cursor: pointer; transition: opacity 0.15s; }
+  .log-add-row button:hover { opacity: 0.85; }
 
-  /* Weekly focus */
+  /* ── Weekly ── */
   .week-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px; margin-bottom: 1.5rem; }
-  .day-col { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; }
-  .day-head { padding: 6px 8px; font-size: 10px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid var(--border); color: var(--ink2); }
+  .day-col { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
+  .day-head { padding: 7px 8px; font-size: 10px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; border-bottom: 1px solid var(--border); color: var(--ink2); }
   .day-head.today { background: var(--accent); color: white; }
   .day-body { padding: 6px; min-height: 80px; }
-  .day-task { font-size: 11px; color: var(--ink2); padding: 3px 5px; border-radius: 3px; margin-bottom: 3px; background: var(--surface2); display: flex; gap: 4px; align-items: flex-start; }
-  .day-task-cb { width: 10px; height: 10px; border: 1px solid var(--border-strong); border-radius: 2px; flex-shrink: 0; margin-top: 1px; cursor: pointer; }
+  .day-task { font-size: 11px; color: var(--ink2); padding: 3px 5px; border-radius: 4px; margin-bottom: 3px; background: var(--surface2); display: flex; gap: 4px; align-items: flex-start; line-height: 1.4; }
+  .day-task-cb { width: 10px; height: 10px; border: 1.5px solid var(--border-strong); border-radius: 2px; flex-shrink: 0; margin-top: 1px; cursor: pointer; transition: all 0.15s; }
   .day-task-cb.done { background: var(--green); border-color: var(--green); }
 
-  /* KPI draft */
+  /* ── KPI ── */
   .kpi-table { width: 100%; border-collapse: collapse; }
-  .kpi-table th { font-size: 10px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink3); font-weight: 500; padding: 8px 12px; text-align: left; border-bottom: 1px solid var(--border-strong); }
-  .kpi-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 13px; vertical-align: top; }
+  .kpi-table th { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--ink3); font-weight: 600; padding: 9px 12px; text-align: left; border-bottom: 1px solid var(--border-strong); }
+  .kpi-table td { padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 13.5px; vertical-align: top; }
   .kpi-table tr:last-child td { border-bottom: none; }
-  .kpi-table td[contenteditable] { outline: none; cursor: text; }
+  .kpi-table td[contenteditable] { outline: none; cursor: text; transition: background 0.1s; }
   .kpi-table td[contenteditable]:focus { background: var(--accent-light); }
   .kpi-table tr:hover td { background: var(--surface2); }
   .kpi-table tr:hover td[contenteditable]:focus { background: var(--accent-light); }
-
-  .kpi-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 1rem; }
-  .section-label { font-size: 10px; text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink3); margin-bottom: 0.75rem; }
+  .kpi-wrap { background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); overflow: hidden; margin-bottom: 1rem; box-shadow: var(--shadow); }
   .add-kpi-row { display: flex; gap: 8px; padding: 0.75rem; border-top: 1px dashed var(--border-strong); flex-wrap: wrap; }
-  .add-kpi-row input { font-family: var(--font-mono); font-size: 12px; background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius-sm); padding: 5px 8px; color: var(--ink); flex: 1; min-width: 100px; outline: none; }
+  .add-kpi-row input { font-family: var(--font); font-size: 12.5px; background: var(--bg); border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 5px 9px; color: var(--ink-solid); flex: 1; min-width: 100px; outline: none; }
   .add-kpi-row input:focus { border-color: var(--accent); }
-  .add-kpi-row button { background: var(--green); color: white; border: none; border-radius: var(--radius-sm); padding: 5px 12px; font-family: var(--font-mono); font-size: 12px; cursor: pointer; }
+  .add-kpi-row button { background: var(--green); color: white; border: none; border-radius: var(--radius-sm); padding: 5px 14px; font-family: var(--font); font-size: 12.5px; font-weight: 500; cursor: pointer; transition: opacity 0.15s; }
+  .add-kpi-row button:hover { opacity: 0.85; }
 
-  /* Badges/tags colors */
+  /* ── Tags ── */
   .tag-observe { background: var(--blue-light); color: var(--blue); }
   .tag-product { background: var(--amber-light); color: var(--amber); }
-  .tag-internal { background: #F0EAF8; color: #5A3080; }
+  .tag-internal { background: var(--purple-light); color: var(--purple); }
   .tag-personal { background: var(--surface2); color: var(--ink2); }
   .tag-zoho { background: #E0F2FE; color: #0369A1; }
+  [data-theme="dark"] .tag-zoho { background: #0C2030; color: #60B8E8; }
   .tag-people { background: var(--green-light); color: var(--green); }
   .tag-deliver { background: var(--accent-light); color: var(--accent); }
   .tag-create { background: var(--amber-light); color: var(--amber); }
-  .tag-manager { background: #F0EAF8; color: #5A3080; }
+  .tag-manager { background: var(--purple-light); color: var(--purple); }
   .tag-measure { background: var(--blue-light); color: var(--blue); }
   .tag-initiative { background: var(--accent-light); color: var(--accent); }
   .tag-cert { background: var(--green-light); color: var(--green); }
 
-  /* Utility */
-  .flex-between { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
-  .btn-ghost { background: none; border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 5px 12px; font-family: var(--font-mono); font-size: 11px; color: var(--ink2); cursor: pointer; }
+  /* ── Utility ── */
+  .flex-between { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; flex-wrap: wrap; gap: 8px; }
+  .section-label { font-size: 10.5px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink3); font-weight: 600; }
+  .btn-ghost { background: var(--surface); border: 1px solid var(--border-strong); border-radius: var(--radius-sm); padding: 5px 12px; font-family: var(--font); font-size: 11.5px; font-weight: 500; color: var(--ink2); cursor: pointer; box-shadow: var(--shadow); transition: border-color 0.15s, color 0.15s; }
   .btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
-  .empty-state { text-align: center; padding: 2rem; color: var(--ink3); font-size: 12px; }
+  .empty-state { text-align: center; padding: 2.5rem; color: var(--ink3); font-size: 13px; }
+  .info-box { margin-bottom: 1rem; font-size: 12.5px; color: var(--ink2); line-height: 1.7; background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); padding: 1rem 1.1rem; box-shadow: var(--shadow); }
+  .info-box strong { color: var(--ink-solid); font-weight: 600; }
+  a { color: var(--accent); }
 
   @media (max-width: 600px) {
     .countdown-strip { grid-template-columns: repeat(2, 1fr); }
     .stats-row { grid-template-columns: repeat(2, 1fr); }
     .week-grid { grid-template-columns: repeat(2, 1fr); }
     .header h1 { font-size: 1.5rem; }
+    .tabs { overflow-x: auto; }
+    .tab { white-space: nowrap; }
   }
 </style>
 </head>
@@ -193,19 +245,22 @@
     <div class="header-top">
       <div>
         <h1>Samuel <span>Johnson</span></h1>
-        <div style="font-size:11px;color:var(--ink3);margin-top:4px;">Product Trainer · Avetium Technologies · Lagos</div>
+        <div class="header-sub">Product Trainer &middot; Avetium Technologies &middot; Lagos</div>
       </div>
-      <div class="header-meta">
-        <strong id="today-display"></strong>
-        <span>Resuming June 1, 2026</span>
+      <div class="header-right">
+        <div class="header-meta">
+          <strong id="today-display"></strong>
+          <span>Resuming June 1, 2026</span>
+        </div>
+        <button class="theme-toggle" onclick="toggleTheme()" id="theme-btn" title="Toggle dark mode">🌙</button>
       </div>
     </div>
   </header>
 
-  <div class="countdown-strip" id="countdown-strip">
+  <div class="countdown-strip">
     <div class="count-card"><div class="num accent" id="cd-days">—</div><div class="lbl">Days to resume</div></div>
     <div class="count-card"><div class="num" id="cd-week">—</div><div class="lbl">Work week</div></div>
-    <div class="count-card"><div class="num" id="cd-month">—</div><div class="lbl">Month of probation</div></div>
+    <div class="count-card"><div class="num" id="cd-month">—</div><div class="lbl">Probation month</div></div>
     <div class="count-card"><div class="num" id="cd-tasks">—</div><div class="lbl">Tasks done</div></div>
   </div>
 
@@ -217,7 +272,7 @@
     <button class="tab" onclick="switchTab('zoho')">Zoho Certs</button>
   </nav>
 
-  <!-- PLAN TAB -->
+  <!-- PLAN -->
   <div id="panel-plan" class="panel active">
     <div class="stats-row">
       <div class="stat-card"><div class="n" id="s-total">0</div><div class="l">Tasks total</div></div>
@@ -227,7 +282,7 @@
     <div id="phases-container"></div>
   </div>
 
-  <!-- WEEKLY TAB -->
+  <!-- WEEKLY -->
   <div id="panel-weekly" class="panel">
     <div class="flex-between">
       <div class="section-label" id="week-label"></div>
@@ -239,9 +294,9 @@
     </div>
     <div class="week-grid" id="week-grid"></div>
     <div style="margin-top:1rem;">
-      <div class="section-label">Add a weekly task</div>
+      <div class="section-label" style="margin-bottom:8px;">Add a weekly task</div>
       <div class="add-task-row" style="border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);padding:0.75rem 1rem;">
-        <input id="weekly-input" placeholder="Task description..." />
+        <input id="weekly-input" placeholder="Task description..." onkeydown="if(event.key==='Enter')addWeeklyTask()"/>
         <select id="weekly-day">
           <option value="0">Mon</option><option value="1">Tue</option><option value="2">Wed</option>
           <option value="3">Thu</option><option value="4">Fri</option>
@@ -251,7 +306,7 @@
     </div>
   </div>
 
-  <!-- LOG TAB -->
+  <!-- LOG -->
   <div id="panel-log" class="panel">
     <div class="log-add">
       <textarea id="log-input" placeholder="What did you do today? What did you learn? Any wins or challenges..."></textarea>
@@ -268,10 +323,10 @@
     <div id="log-container"></div>
   </div>
 
-  <!-- KPI TAB -->
+  <!-- KPI -->
   <div id="panel-kpi" class="panel">
-    <div style="margin-bottom:1rem;font-size:12px;color:var(--ink2);line-height:1.7;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem;">
-      <strong style="color:var(--ink);">How to use this:</strong> Around month 2, share this draft with your manager framed as "does this align with your expectations?" Click any cell to edit. Set targets you're confident you can hit or exceed.
+    <div class="info-box">
+      <strong>How to use this:</strong> Around month 2, share this draft with your manager framed as "does this align with your expectations?" Click any cell to edit. Set targets you're confident you can hit or exceed.
     </div>
     <div class="kpi-wrap">
       <table class="kpi-table">
@@ -287,160 +342,141 @@
     </div>
   </div>
 
-  <!-- ZOHO TAB -->
+  <!-- ZOHO -->
   <div id="panel-zoho" class="panel">
-    <div style="margin-bottom:1rem;font-size:12px;color:var(--ink2);line-height:1.7;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem;">
-      Target: <strong style="color:var(--ink);">2–3 Zoho certifications before your 6-month confirmation.</strong> Start at <a href="https://learn.zoho.com" target="_blank" style="color:var(--accent);">learn.zoho.com</a> — it's free. Prioritise the products Avetium trains clients on most.
+    <div class="info-box">
+      Target: <strong>2–3 Zoho certifications before your 6-month confirmation.</strong> Start at <a href="https://learn.zoho.com" target="_blank">learn.zoho.com</a> — it's free. Prioritise the products Avetium trains clients on most.
     </div>
     <div id="zoho-container"></div>
-    <div class="add-task-row" style="border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);margin-top:0.5rem;">
-      <input id="zoho-input" placeholder="Add a certification or course..." />
+    <div class="add-task-row" style="border-radius:var(--radius);border:1px solid var(--border);background:var(--surface);margin-top:6px;">
+      <input id="zoho-input" placeholder="Add a certification or course..." onkeydown="if(event.key==='Enter')addZohoCert()"/>
       <button onclick="addZohoCert()">+ Add</button>
     </div>
   </div>
 
 </div>
-
 <script>
 const RESUME_DATE = new Date('2026-06-01');
 
-// ── Storage helpers ──────────────────────────────────────────────
-function save(k, v) { try { localStorage.setItem('sj_'+k, JSON.stringify(v)); } catch(e){} }
-function load(k, def) { try { const v = localStorage.getItem('sj_'+k); return v ? JSON.parse(v) : def; } catch(e){ return def; } }
+function save(k,v){try{localStorage.setItem('sj_'+k,JSON.stringify(v));}catch(e){}}
+function load(k,def){try{const v=localStorage.getItem('sj_'+k);return v?JSON.parse(v):def;}catch(e){return def;}}
+
+// ── Theme ────────────────────────────────────────────────────────
+let darkMode = load('darkMode', window.matchMedia('(prefers-color-scheme: dark)').matches);
+function applyTheme() {
+  document.documentElement.setAttribute('data-theme', darkMode ? 'dark' : 'light');
+  document.getElementById('theme-btn').textContent = darkMode ? '☀️' : '🌙';
+}
+function toggleTheme() { darkMode = !darkMode; save('darkMode', darkMode); applyTheme(); }
+applyTheme();
 
 // ── Default data ─────────────────────────────────────────────────
 const DEFAULT_PHASES = [
   {
-    id: 'p1', title: 'Month 1 — Listen & Learn', sub: 'Jun 1 – Jun 30', color: '#1A4F7A', fillColor: '#378ADD',
-    tasks: [
-      { id: 't1', text: 'Shadow every client interaction — note what confuses users most', tag: 'observe', done: false },
-      { id: 't2', text: 'Map all Avetium products — understand what they sell and to whom', tag: 'product', done: false },
-      { id: 't3', text: 'Ask support team: what are the top 5 tickets we keep seeing?', tag: 'internal', done: false },
-      { id: 't4', text: 'Start a private notes doc — log observations daily, no matter how small', tag: 'personal', done: false },
-      { id: 't5', text: 'Enroll in Zoho Learn — start with the product the team trains on most', tag: 'zoho', done: false },
-      { id: 't6', text: 'Introduce yourself to product, sales, and support leads — build the relationship early', tag: 'people', done: false },
+    id:'p1',title:'Month 1 — Listen & Learn',sub:'Jun 1 – Jun 30',fillColor:'#378ADD',
+    tasks:[
+      {id:'t1',text:'Shadow every client interaction — note what confuses users most',tag:'observe',done:false},
+      {id:'t2',text:'Map all Avetium products — understand what they sell and to whom',tag:'product',done:false},
+      {id:'t3',text:'Ask support team: what are the top 5 tickets we keep seeing?',tag:'internal',done:false},
+      {id:'t4',text:'Start a private notes doc — log observations daily, no matter how small',tag:'personal',done:false},
+      {id:'t5',text:'Enroll in Zoho Learn — start with the product the team trains on most',tag:'zoho',done:false},
+      {id:'t6',text:'Introduce yourself to product, sales, and support leads — build the relationship early',tag:'people',done:false},
     ]
   },
   {
-    id: 'p2', title: 'Month 2 — Execute & Document', sub: 'Jul 1 – Jul 31', color: '#2D6A4F', fillColor: '#639922',
-    tasks: [
-      { id: 't7', text: 'Deliver your first training session — log the date and who attended', tag: 'deliver', done: false },
-      { id: 't8', text: 'Create your first training material — a one-page quick-reference guide', tag: 'create', done: false },
-      { id: 't9', text: 'Complete your first Zoho certification exam', tag: 'zoho', done: false },
-      { id: 't10', text: 'Draft your personal KPI scorecard in the KPI tab', tag: 'personal', done: false },
-      { id: 't11', text: 'Have a casual check-in with your manager — gauge their style before proposing anything formal', tag: 'manager', done: false },
-      { id: 't12', text: 'Send a post-training feedback form after every session — even a simple 3-question Google Form', tag: 'measure', done: false },
+    id:'p2',title:'Month 2 — Execute & Document',sub:'Jul 1 – Jul 31',fillColor:'#639922',
+    tasks:[
+      {id:'t7',text:'Deliver your first training session — log the date and who attended',tag:'deliver',done:false},
+      {id:'t8',text:'Create your first training material — a one-page quick-reference guide',tag:'create',done:false},
+      {id:'t9',text:'Complete your first Zoho certification exam',tag:'zoho',done:false},
+      {id:'t10',text:'Draft your personal KPI scorecard in the KPI tab',tag:'personal',done:false},
+      {id:'t11',text:'Have a casual check-in with your manager — gauge their style before proposing anything formal',tag:'manager',done:false},
+      {id:'t12',text:'Send a post-training feedback form after every session — even a simple 3-question Google Form',tag:'measure',done:false},
     ]
   },
   {
-    id: 'p3', title: 'Month 3 — Propose & Stand Out', sub: 'Aug 1 – Aug 31', color: '#B5600A', fillColor: '#EF9F27',
-    tasks: [
-      { id: 't13', text: 'Share your KPI draft with manager — frame it as "does this align with your expectations?"', tag: 'manager', done: false },
-      { id: 't14', text: 'Build a small training library — at least 3 reusable resources (guides, videos, or slides)', tag: 'create', done: false },
-      { id: 't15', text: 'Get a second Zoho certification on a different product', tag: 'zoho', done: false },
-      { id: 't16', text: 'Identify one process gap and propose a solution — shows strategic thinking', tag: 'initiative', done: false },
-      { id: 't17', text: 'Begin researching CTT+ or Train-the-Trainer certification for after confirmation', tag: 'cert', done: false },
-      { id: 't18', text: 'Compile a summary of your wins to reference at your 6-month review', tag: 'personal', done: false },
+    id:'p3',title:'Month 3 — Propose & Stand Out',sub:'Aug 1 – Aug 31',fillColor:'#EF9F27',
+    tasks:[
+      {id:'t13',text:'Share your KPI draft with manager — frame it as "does this align with your expectations?"',tag:'manager',done:false},
+      {id:'t14',text:'Build a small training library — at least 3 reusable resources (guides, videos, or slides)',tag:'create',done:false},
+      {id:'t15',text:'Get a second Zoho certification on a different product',tag:'zoho',done:false},
+      {id:'t16',text:'Identify one process gap and propose a solution — shows strategic thinking',tag:'initiative',done:false},
+      {id:'t17',text:'Begin researching CTT+ or Train-the-Trainer certification for after confirmation',tag:'cert',done:false},
+      {id:'t18',text:'Compile a summary of your wins to reference at your 6-month review',tag:'personal',done:false},
     ]
   }
 ];
 
 const DEFAULT_KPI = [
-  { metric: 'Training sessions delivered / month', target: '4+ sessions', actual: '', notes: 'Track date + attendees each time' },
-  { metric: 'Post-training satisfaction score', target: '4.0 / 5.0 avg', actual: '', notes: 'Use a simple Google Form after each session' },
-  { metric: 'Training materials created', target: '3 by end of Month 3', actual: '', notes: 'Guides, decks, or video walkthroughs' },
-  { metric: 'Zoho certifications earned', target: '2 before confirmation', actual: '', notes: 'Start with most-used product' },
-  { metric: 'Support ticket reduction', target: 'Visible trend down', actual: '', notes: 'Ask support team for a before/after count' },
-  { metric: 'Client onboarding completed', target: 'All assigned clients', actual: '', notes: 'Log each onboarding with outcome' },
+  {metric:'Training sessions delivered / month',target:'4+ sessions',actual:'',notes:'Track date + attendees each time'},
+  {metric:'Post-training satisfaction score',target:'4.0 / 5.0 avg',actual:'',notes:'Use a simple Google Form after each session'},
+  {metric:'Training materials created',target:'3 by end of Month 3',actual:'',notes:'Guides, decks, or video walkthroughs'},
+  {metric:'Zoho certifications earned',target:'2 before confirmation',actual:'',notes:'Start with most-used product'},
+  {metric:'Support ticket reduction',target:'Visible trend down',actual:'',notes:'Ask support team for a before/after count'},
+  {metric:'Client onboarding completed',target:'All assigned clients',actual:'',notes:'Log each onboarding with outcome'},
 ];
 
 const DEFAULT_ZOHO = [
-  { name: 'Zoho CRM Certified Consultant', status: 'not-started', url: 'https://learn.zoho.com' },
-  { name: 'Zoho Books Certification', status: 'not-started', url: 'https://learn.zoho.com' },
-  { name: 'Zoho Desk Product Expert', status: 'not-started', url: 'https://learn.zoho.com' },
-  { name: 'Zoho One Fundamentals', status: 'not-started', url: 'https://learn.zoho.com' },
+  {name:'Zoho CRM Certified Consultant',status:'not-started',url:'https://learn.zoho.com'},
+  {name:'Zoho Books Certification',status:'not-started',url:'https://learn.zoho.com'},
+  {name:'Zoho Desk Product Expert',status:'not-started',url:'https://learn.zoho.com'},
+  {name:'Zoho One Fundamentals',status:'not-started',url:'https://learn.zoho.com'},
 ];
 
-// ── State ────────────────────────────────────────────────────────
 let phases = load('phases', DEFAULT_PHASES);
 let logs = load('logs', []);
 let kpis = load('kpi', DEFAULT_KPI);
 let zohos = load('zoho', DEFAULT_ZOHO);
-let weeklyTasks = load('weekly', {});
 let weekOffset = 0;
 
-// ── Helpers ──────────────────────────────────────────────────────
-function uid() { return Date.now().toString(36) + Math.random().toString(36).slice(2,6); }
-function today() {
-  const d = new Date();
-  return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-}
-function fmtDate(iso) {
-  const d = new Date(iso + 'T00:00:00');
-  return d.toLocaleDateString('en-GB', { weekday:'short', day:'numeric', month:'short', year:'numeric' });
-}
-function getMondayOfWeek(offset) {
-  const d = new Date();
-  const day = d.getDay(); // 0=Sun
-  const diff = (day === 0 ? -6 : 1 - day);
-  d.setDate(d.getDate() + diff + offset * 7);
-  d.setHours(0,0,0,0);
-  return d;
-}
-function weekKey(offset) {
-  const m = getMondayOfWeek(offset);
-  return `${m.getFullYear()}-W${String(Math.ceil((m.getDate())/7)).padStart(2,'0')}-${m.getMonth()}`;
+function uid(){return Date.now().toString(36)+Math.random().toString(36).slice(2,6);}
+function today(){const d=new Date();return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+function fmtDate(iso){const d=new Date(iso+'T00:00:00');return d.toLocaleDateString('en-GB',{weekday:'short',day:'numeric',month:'short',year:'numeric'});}
+function getMondayOfWeek(offset){
+  const d=new Date();const day=d.getDay();
+  const diff=(day===0?-6:1-day);
+  d.setDate(d.getDate()+diff+offset*7);d.setHours(0,0,0,0);return d;
 }
 
-// ── Header / Countdown ──────────────────────────────────────────
-function updateHeader() {
-  const now = new Date();
-  document.getElementById('today-display').textContent = now.toLocaleDateString('en-GB', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
-
-  const msDay = 1000*60*60*24;
-  const daysToResume = Math.ceil((RESUME_DATE - now) / msDay);
-
-  if (daysToResume > 0) {
-    document.getElementById('cd-days').textContent = daysToResume;
-    document.getElementById('cd-week').textContent = '—';
-    document.getElementById('cd-month').textContent = '—';
+// ── Header ───────────────────────────────────────────────────────
+function updateHeader(){
+  const now=new Date();
+  document.getElementById('today-display').textContent=now.toLocaleDateString('en-GB',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  const msDay=1000*60*60*24;
+  const daysToResume=Math.ceil((RESUME_DATE-now)/msDay);
+  if(daysToResume>0){
+    document.getElementById('cd-days').textContent=daysToResume;
+    document.getElementById('cd-week').textContent='—';
+    document.getElementById('cd-month').textContent='—';
   } else {
-    document.getElementById('cd-days').textContent = '✓';
-    document.getElementById('cd-days').style.color = 'var(--green)';
-    const daysSince = Math.floor((now - RESUME_DATE) / msDay);
-    const workWeek = Math.floor(daysSince / 7) + 1;
-    const probMonth = Math.floor(daysSince / 30) + 1;
-    document.getElementById('cd-week').textContent = `W${workWeek}`;
-    document.getElementById('cd-month').textContent = probMonth <= 6 ? `M${probMonth}` : 'Confirmed';
+    document.getElementById('cd-days').textContent='✓';
+    document.getElementById('cd-days').style.color='var(--green)';
+    const daysSince=Math.floor((now-RESUME_DATE)/msDay);
+    document.getElementById('cd-week').textContent=`W${Math.floor(daysSince/7)+1}`;
+    const pm=Math.floor(daysSince/30)+1;
+    document.getElementById('cd-month').textContent=pm<=6?`M${pm}`:'Confirmed ✓';
   }
-
-  const allTasks = phases.flatMap(p => p.tasks);
-  const done = allTasks.filter(t => t.done).length;
-  document.getElementById('cd-tasks').textContent = `${done}/${allTasks.length}`;
+  const allTasks=phases.flatMap(p=>p.tasks);
+  const done=allTasks.filter(t=>t.done).length;
+  document.getElementById('cd-tasks').textContent=`${done}/${allTasks.length}`;
 }
 
-// ── Plan tab ─────────────────────────────────────────────────────
-function renderPlan() {
-  const container = document.getElementById('phases-container');
-  container.innerHTML = '';
-
-  let totalDone = 0, totalAll = 0;
-
-  phases.forEach((phase, pi) => {
-    const done = phase.tasks.filter(t => t.done).length;
-    const pct = phase.tasks.length ? Math.round(done / phase.tasks.length * 100) : 0;
-    totalDone += done; totalAll += phase.tasks.length;
-
-    const block = document.createElement('div');
-    block.className = 'phase-block';
-    block.innerHTML = `
-      <div class="phase-head" onclick="togglePhase('${phase.id}')">
+// ── Plan ─────────────────────────────────────────────────────────
+function renderPlan(){
+  const container=document.getElementById('phases-container');
+  container.innerHTML='';
+  let totalDone=0,totalAll=0;
+  phases.forEach(phase=>{
+    const done=phase.tasks.filter(t=>t.done).length;
+    const pct=phase.tasks.length?Math.round(done/phase.tasks.length*100):0;
+    totalDone+=done;totalAll+=phase.tasks.length;
+    const block=document.createElement('div');
+    block.className='phase-block';
+    block.innerHTML=`
+      <div class="phase-head" onclick="togglePhase('${phase.id}',this)">
         <div class="phase-head-left">
           <div class="phase-dot" style="background:${phase.fillColor}"></div>
-          <div>
-            <div class="phase-title">${phase.title}</div>
-            <div class="phase-sub">${phase.sub}</div>
-          </div>
+          <div><div class="phase-title">${phase.title}</div><div class="phase-sub">${phase.sub}</div></div>
         </div>
         <div class="phase-right">
           <div class="phase-pct">${pct}%</div>
@@ -451,7 +487,7 @@ function renderPlan() {
       <div class="phase-body">
         <div id="tasklist-${phase.id}"></div>
         <div class="add-task-row">
-          <input id="newtask-${phase.id}" placeholder="Add a task to this phase..." onkeydown="if(event.key==='Enter')addTask('${phase.id}')"/>
+          <input id="newtask-${phase.id}" placeholder="Add a task..." onkeydown="if(event.key==='Enter')addTask('${phase.id}')"/>
           <select id="newtag-${phase.id}">
             ${['observe','product','internal','personal','zoho','people','deliver','create','manager','measure','initiative','cert'].map(t=>`<option value="${t}">${t}</option>`).join('')}
           </select>
@@ -459,24 +495,19 @@ function renderPlan() {
         </div>
       </div>`;
     container.appendChild(block);
-
-    const list = block.querySelector(`#tasklist-${phase.id}`);
-    phase.tasks.forEach(task => {
-      list.appendChild(makeTaskEl(task, phase.id));
-    });
+    const list=block.querySelector(`#tasklist-${phase.id}`);
+    phase.tasks.forEach(task=>list.appendChild(makeTaskEl(task,phase.id)));
   });
-
-  document.getElementById('s-total').textContent = totalAll;
-  document.getElementById('s-done').textContent = totalDone;
-  document.getElementById('s-pct').textContent = totalAll ? Math.round(totalDone/totalAll*100)+'%' : '0%';
+  document.getElementById('s-total').textContent=totalAll;
+  document.getElementById('s-done').textContent=totalDone;
+  document.getElementById('s-pct').textContent=totalAll?Math.round(totalDone/totalAll*100)+'%':'0%';
   updateHeader();
 }
 
-function makeTaskEl(task, phaseId) {
-  const el = document.createElement('div');
-  el.className = 'task-item';
-  el.dataset.id = task.id;
-  el.innerHTML = `
+function makeTaskEl(task,phaseId){
+  const el=document.createElement('div');
+  el.className='task-item';
+  el.innerHTML=`
     <div class="task-cb ${task.done?'done':''}" onclick="toggleTask('${phaseId}','${task.id}')"></div>
     <div class="task-content">
       <div class="task-text ${task.done?'done':''}">${task.text}</div>
@@ -488,245 +519,170 @@ function makeTaskEl(task, phaseId) {
   return el;
 }
 
-function togglePhase(id) {
-  const block = document.querySelector(`#phases-container .phase-block:has(#tasklist-${id})`);
-  if (block) block.classList.toggle('collapsed');
+function togglePhase(id,headEl){
+  const block=headEl.closest('.phase-block');
+  block.classList.toggle('collapsed');
+}
+function toggleTask(phaseId,taskId){
+  const phase=phases.find(p=>p.id===phaseId);
+  const task=phase.tasks.find(t=>t.id===taskId);
+  task.done=!task.done;save('phases',phases);renderPlan();
+}
+function addTask(phaseId){
+  const input=document.getElementById(`newtask-${phaseId}`);
+  const tagEl=document.getElementById(`newtag-${phaseId}`);
+  const text=input.value.trim();if(!text)return;
+  const phase=phases.find(p=>p.id===phaseId);
+  phase.tasks.push({id:uid(),text,tag:tagEl.value,done:false});
+  save('phases',phases);input.value='';renderPlan();
+}
+function deleteTask(phaseId,taskId){
+  const phase=phases.find(p=>p.id===phaseId);
+  phase.tasks=phase.tasks.filter(t=>t.id!==taskId);
+  save('phases',phases);renderPlan();
 }
 
-function toggleTask(phaseId, taskId) {
-  const phase = phases.find(p => p.id === phaseId);
-  const task = phase.tasks.find(t => t.id === taskId);
-  task.done = !task.done;
-  save('phases', phases);
-  renderPlan();
-}
-
-function addTask(phaseId) {
-  const input = document.getElementById(`newtask-${phaseId}`);
-  const tagEl = document.getElementById(`newtag-${phaseId}`);
-  const text = input.value.trim();
-  if (!text) return;
-  const phase = phases.find(p => p.id === phaseId);
-  phase.tasks.push({ id: uid(), text, tag: tagEl.value, done: false });
-  save('phases', phases);
-  input.value = '';
-  renderPlan();
-}
-
-function deleteTask(phaseId, taskId) {
-  const phase = phases.find(p => p.id === phaseId);
-  phase.tasks = phase.tasks.filter(t => t.id !== taskId);
-  save('phases', phases);
-  renderPlan();
-}
-
-// ── Weekly tab ──────────────────────────────────────────────────
-function renderWeekly() {
-  const monday = getMondayOfWeek(weekOffset);
-  const days = ['Mon','Tue','Wed','Thu','Fri'];
-  const grid = document.getElementById('week-grid');
-  const todayStr = today();
-  grid.innerHTML = '';
-
-  const wk = load('weekly', {});
-
-  const fromDate = new Date(monday);
-  const toDate = new Date(monday);
-  toDate.setDate(toDate.getDate() + 4);
-  document.getElementById('week-label').textContent =
-    `Week of ${fromDate.toLocaleDateString('en-GB',{day:'numeric',month:'short'})} – ${toDate.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}`;
-
-  days.forEach((day, i) => {
-    const d = new Date(monday);
-    d.setDate(d.getDate() + i);
-    const ds = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-    const isToday = ds === todayStr;
-
-    const col = document.createElement('div');
-    col.className = 'day-col';
-    col.innerHTML = `<div class="day-head ${isToday?'today':''}">${day} ${d.getDate()}</div><div class="day-body" id="day-${ds}"></div>`;
+// ── Weekly ───────────────────────────────────────────────────────
+function renderWeekly(){
+  const monday=getMondayOfWeek(weekOffset);
+  const days=['Mon','Tue','Wed','Thu','Fri'];
+  const grid=document.getElementById('week-grid');
+  const todayStr=today();grid.innerHTML='';
+  const wk=load('weekly',{});
+  const toDate=new Date(monday);toDate.setDate(toDate.getDate()+4);
+  document.getElementById('week-label').textContent=
+    `Week of ${monday.toLocaleDateString('en-GB',{day:'numeric',month:'short'})} – ${toDate.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'})}`;
+  days.forEach((day,i)=>{
+    const d=new Date(monday);d.setDate(d.getDate()+i);
+    const ds=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+    const isToday=ds===todayStr;
+    const col=document.createElement('div');col.className='day-col';
+    col.innerHTML=`<div class="day-head ${isToday?'today':''}">${day} ${d.getDate()}</div><div class="day-body" id="day-${ds}"></div>`;
     grid.appendChild(col);
-
-    const body = col.querySelector(`#day-${ds}`);
-    const tasks = (wk[ds] || []);
-    if (tasks.length === 0) {
-      body.innerHTML = '<div style="font-size:11px;color:var(--ink3);padding:4px;">—</div>';
-    } else {
-      tasks.forEach((t, ti) => {
-        const dt = document.createElement('div');
-        dt.className = 'day-task';
-        dt.innerHTML = `<div class="day-task-cb ${t.done?'done':''}" onclick="toggleDayTask('${ds}',${ti})"></div><span>${t.text}</span>`;
-        body.appendChild(dt);
-      });
-    }
+    const body=col.querySelector(`#day-${ds}`);
+    const tasks=(wk[ds]||[]);
+    if(!tasks.length){body.innerHTML='<div style="font-size:11px;color:var(--ink3);padding:4px 2px;">—</div>';}
+    else tasks.forEach((t,ti)=>{
+      const dt=document.createElement('div');dt.className='day-task';
+      dt.innerHTML=`<div class="day-task-cb ${t.done?'done':''}" onclick="toggleDayTask('${ds}',${ti})"></div><span>${t.text}</span>`;
+      body.appendChild(dt);
+    });
   });
 }
-
-function toggleDayTask(ds, ti) {
-  const wk = load('weekly', {});
-  if (wk[ds] && wk[ds][ti]) wk[ds][ti].done = !wk[ds][ti].done;
-  save('weekly', wk);
-  renderWeekly();
+function toggleDayTask(ds,ti){
+  const wk=load('weekly',{});
+  if(wk[ds]&&wk[ds][ti])wk[ds][ti].done=!wk[ds][ti].done;
+  save('weekly',wk);renderWeekly();
 }
-
-function addWeeklyTask() {
-  const text = document.getElementById('weekly-input').value.trim();
-  const dayIndex = parseInt(document.getElementById('weekly-day').value);
-  if (!text) return;
-  const monday = getMondayOfWeek(weekOffset);
-  const d = new Date(monday);
-  d.setDate(d.getDate() + dayIndex);
-  const ds = `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
-  const wk = load('weekly', {});
-  if (!wk[ds]) wk[ds] = [];
-  wk[ds].push({ text, done: false });
-  save('weekly', wk);
-  document.getElementById('weekly-input').value = '';
-  renderWeekly();
+function addWeeklyTask(){
+  const text=document.getElementById('weekly-input').value.trim();
+  const dayIndex=parseInt(document.getElementById('weekly-day').value);
+  if(!text)return;
+  const monday=getMondayOfWeek(weekOffset);
+  const d=new Date(monday);d.setDate(d.getDate()+dayIndex);
+  const ds=`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;
+  const wk=load('weekly',{});if(!wk[ds])wk[ds]=[];
+  wk[ds].push({text,done:false});save('weekly',wk);
+  document.getElementById('weekly-input').value='';renderWeekly();
 }
+function navWeek(dir){weekOffset=(dir===0?0:weekOffset+dir);renderWeekly();}
 
-function navWeek(dir) {
-  if (dir === 0) weekOffset = 0;
-  else weekOffset += dir;
-  renderWeekly();
-}
-
-// ── Log tab ──────────────────────────────────────────────────────
-function renderLog() {
-  const container = document.getElementById('log-container');
-  if (logs.length === 0) {
-    container.innerHTML = '<div class="empty-state">No entries yet. Write your first log above.</div>';
-    return;
-  }
-  container.innerHTML = '';
-  const icons = { win:'🏆', learn:'📚', challenge:'⚠️', note:'📝' };
-  [...logs].reverse().forEach((entry, ri) => {
-    const i = logs.length - 1 - ri;
-    const el = document.createElement('div');
-    el.className = 'log-entry';
-    el.innerHTML = `
-      <div class="log-date">${icons[entry.type] || '📝'} ${fmtDate(entry.date)} · ${entry.type}</div>
+// ── Log ──────────────────────────────────────────────────────────
+function renderLog(){
+  const container=document.getElementById('log-container');
+  if(!logs.length){container.innerHTML='<div class="empty-state">No entries yet. Write your first log above.</div>';return;}
+  container.innerHTML='';
+  const icons={win:'🏆',learn:'📚',challenge:'⚠️',note:'📝'};
+  [...logs].reverse().forEach((entry,ri)=>{
+    const i=logs.length-1-ri;
+    const el=document.createElement('div');el.className='log-entry';
+    el.innerHTML=`
+      <div class="log-date">${icons[entry.type]||'📝'} ${fmtDate(entry.date)} · ${entry.type}</div>
       <div class="log-text">${entry.text}</div>
       <button class="log-del" onclick="deleteLog(${i})">✕</button>`;
     container.appendChild(el);
   });
 }
-
-function addLog() {
-  const text = document.getElementById('log-input').value.trim();
-  const type = document.getElementById('log-type').value;
-  if (!text) return;
-  logs.push({ id: uid(), text, type, date: today() });
-  save('logs', logs);
-  document.getElementById('log-input').value = '';
-  renderLog();
+function addLog(){
+  const text=document.getElementById('log-input').value.trim();
+  const type=document.getElementById('log-type').value;
+  if(!text)return;
+  logs.push({id:uid(),text,type,date:today()});
+  save('logs',logs);document.getElementById('log-input').value='';renderLog();
 }
+function deleteLog(i){logs.splice(i,1);save('logs',logs);renderLog();}
 
-function deleteLog(i) {
-  logs.splice(i, 1);
-  save('logs', logs);
-  renderLog();
-}
-
-// ── KPI tab ──────────────────────────────────────────────────────
-function renderKPI() {
-  const tbody = document.getElementById('kpi-body');
-  tbody.innerHTML = '';
-  kpis.forEach((k, i) => {
-    const tr = document.createElement('tr');
-    tr.innerHTML = `
+// ── KPI ──────────────────────────────────────────────────────────
+function renderKPI(){
+  const tbody=document.getElementById('kpi-body');tbody.innerHTML='';
+  kpis.forEach((k,i)=>{
+    const tr=document.createElement('tr');
+    tr.innerHTML=`
       <td contenteditable spellcheck="false" onblur="saveKPI(${i},'metric',this.textContent)">${k.metric}</td>
       <td contenteditable spellcheck="false" onblur="saveKPI(${i},'target',this.textContent)">${k.target}</td>
-      <td contenteditable spellcheck="false" onblur="saveKPI(${i},'actual',this.textContent)" style="color:${k.actual?'var(--green)':'var(--ink3)'}">${k.actual || '—'}</td>
+      <td contenteditable spellcheck="false" onblur="saveKPI(${i},'actual',this.textContent)" style="color:${k.actual?'var(--green)':'var(--ink3)'}">${k.actual||'—'}</td>
       <td contenteditable spellcheck="false" onblur="saveKPI(${i},'notes',this.textContent)" style="color:var(--ink2)">${k.notes}</td>`;
     tbody.appendChild(tr);
   });
 }
-
-function saveKPI(i, field, val) {
-  kpis[i][field] = val.trim();
-  save('kpi', kpis);
-}
-
-function addKPI() {
-  const m = document.getElementById('kpi-metric').value.trim();
-  const t = document.getElementById('kpi-target').value.trim();
-  const n = document.getElementById('kpi-notes').value.trim();
-  if (!m) return;
-  kpis.push({ metric:m, target:t, actual:'', notes:n });
-  save('kpi', kpis);
-  document.getElementById('kpi-metric').value = '';
-  document.getElementById('kpi-target').value = '';
-  document.getElementById('kpi-notes').value = '';
+function saveKPI(i,field,val){kpis[i][field]=val.trim();save('kpi',kpis);}
+function addKPI(){
+  const m=document.getElementById('kpi-metric').value.trim();
+  const t=document.getElementById('kpi-target').value.trim();
+  const n=document.getElementById('kpi-notes').value.trim();
+  if(!m)return;
+  kpis.push({metric:m,target:t,actual:'',notes:n});save('kpi',kpis);
+  document.getElementById('kpi-metric').value='';
+  document.getElementById('kpi-target').value='';
+  document.getElementById('kpi-notes').value='';
   renderKPI();
 }
 
-// ── Zoho tab ────────────────────────────────────────────────────
-function renderZoho() {
-  const container = document.getElementById('zoho-container');
-  container.innerHTML = '';
-  const statusColors = { 'not-started':'var(--ink3)', 'in-progress':'var(--amber)', 'done':'var(--green)' };
-  const statusLabels = { 'not-started':'Not started', 'in-progress':'In progress', 'done':'✓ Certified' };
-
-  zohos.forEach((z, i) => {
-    const el = document.createElement('div');
-    el.className = 'phase-block';
-    el.style.marginBottom = '8px';
-    el.innerHTML = `
-      <div style="display:flex;align-items:center;gap:12px;padding:0.875rem 1rem;">
-        <div style="width:8px;height:8px;border-radius:50%;background:${statusColors[z.status]};flex-shrink:0;"></div>
-        <div style="flex:1;font-size:13px;color:var(--ink);">${z.name}</div>
-        <select onchange="updateZohoStatus(${i},this.value)" style="font-family:var(--font-mono);font-size:11px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-sm);padding:4px 8px;color:var(--ink);">
+// ── Zoho ─────────────────────────────────────────────────────────
+function renderZoho(){
+  const container=document.getElementById('zoho-container');container.innerHTML='';
+  const statusColors={'not-started':'var(--ink3)','in-progress':'var(--amber)','done':'var(--green)'};
+  zohos.forEach((z,i)=>{
+    const el=document.createElement('div');el.className='phase-block';el.style.marginBottom='8px';
+    el.innerHTML=`
+      <div style="display:flex;align-items:center;gap:12px;padding:0.875rem 1.1rem;">
+        <div style="width:9px;height:9px;border-radius:50%;background:${statusColors[z.status]};flex-shrink:0;"></div>
+        <div style="flex:1;font-size:13.5px;color:var(--ink-solid);font-weight:400;">${z.name}</div>
+        <select onchange="updateZohoStatus(${i},this.value)" style="font-family:var(--font);font-size:12px;background:var(--surface);border:1px solid var(--border-strong);border-radius:var(--radius-sm);padding:5px 9px;color:var(--ink-solid);outline:none;">
           <option value="not-started" ${z.status==='not-started'?'selected':''}>Not started</option>
           <option value="in-progress" ${z.status==='in-progress'?'selected':''}>In progress</option>
           <option value="done" ${z.status==='done'?'selected':''}>Certified ✓</option>
         </select>
-        <a href="${z.url}" target="_blank" style="font-size:11px;color:var(--accent);text-decoration:none;">→ Start</a>
-        <button onclick="deleteZoho(${i})" style="background:none;border:none;color:var(--ink3);cursor:pointer;font-size:12px;">✕</button>
+        <a href="${z.url}" target="_blank" style="font-size:12px;color:var(--accent);text-decoration:none;font-weight:500;">→ Start</a>
+        <button onclick="deleteZoho(${i})" style="background:none;border:none;color:var(--ink3);cursor:pointer;font-size:13px;padding:2px 4px;">✕</button>
       </div>`;
     container.appendChild(el);
   });
 }
-
-function updateZohoStatus(i, val) {
-  zohos[i].status = val;
-  save('zoho', zohos);
-  renderZoho();
+function updateZohoStatus(i,val){zohos[i].status=val;save('zoho',zohos);renderZoho();}
+function deleteZoho(i){zohos.splice(i,1);save('zoho',zohos);renderZoho();}
+function addZohoCert(){
+  const name=document.getElementById('zoho-input').value.trim();if(!name)return;
+  zohos.push({name,status:'not-started',url:'https://learn.zoho.com'});
+  save('zoho',zohos);document.getElementById('zoho-input').value='';renderZoho();
 }
 
-function deleteZoho(i) {
-  zohos.splice(i, 1);
-  save('zoho', zohos);
-  renderZoho();
-}
-
-function addZohoCert() {
-  const name = document.getElementById('zoho-input').value.trim();
-  if (!name) return;
-  zohos.push({ name, status:'not-started', url:'https://learn.zoho.com' });
-  save('zoho', zohos);
-  document.getElementById('zoho-input').value = '';
-  renderZoho();
-}
-
-// ── Tab switching ────────────────────────────────────────────────
-function switchTab(name) {
-  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+// ── Tabs ─────────────────────────────────────────────────────────
+function switchTab(name){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
   document.querySelector(`.tab[onclick="switchTab('${name}')"]`).classList.add('active');
   document.getElementById(`panel-${name}`).classList.add('active');
-  if (name === 'weekly') renderWeekly();
-  if (name === 'log') renderLog();
-  if (name === 'kpi') renderKPI();
-  if (name === 'zoho') renderZoho();
+  if(name==='weekly')renderWeekly();
+  if(name==='log')renderLog();
+  if(name==='kpi')renderKPI();
+  if(name==='zoho')renderZoho();
 }
 
 // ── Init ─────────────────────────────────────────────────────────
 updateHeader();
 renderPlan();
-
-// Refresh header every minute
-setInterval(updateHeader, 60000);
+setInterval(updateHeader,60000);
 </script>
 </body>
 </html>
